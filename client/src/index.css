@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: #1a3a5c #050a14; }
+*::-webkit-scrollbar { width: 5px; }
+*::-webkit-scrollbar-track { background: #050a14; }
+*::-webkit-scrollbar-thumb { background: #1a3a5c; border-radius: 3px; }
+
+body {
+  background: #050a14;
+  color: #e2e8f0;
+  font-family: 'Exo 2', sans-serif;
+  overflow-x: hidden;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.border-glow {
+  border: 1px solid rgba(0,212,255,0.2);
+  box-shadow: 0 0 12px rgba(0,212,255,0.06), inset 0 0 12px rgba(0,212,255,0.02);
+  transition: all 0.25s;
+}
+.border-glow:hover {
+  border-color: rgba(0,212,255,0.45);
+  box-shadow: 0 0 24px rgba(0,212,255,0.15);
+}
+
+.metric-value { font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px currentColor; }
+
+.status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blink 2s infinite; }
+.status-dot.green  { background: #00ff9f; box-shadow: 0 0 8px #00ff9f; }
+.status-dot.yellow { background: #ffd700; box-shadow: 0 0 8px #ffd700; }
+.status-dot.red    { background: #ff4444; box-shadow: 0 0 8px #ff4444; animation: blink .8s infinite; }
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.alert-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 9px; border-radius: 20px;
+  font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.alert-pill.critical { background: rgba(255,68,68,.15);  color:#ff6b6b; border:1px solid rgba(255,68,68,.3); }
+.alert-pill.high     { background: rgba(255,140,0,.15);  color:#ff8c00; border:1px solid rgba(255,140,0,.3); }
+.alert-pill.medium   { background: rgba(255,215,0,.12);  color:#ffd700; border:1px solid rgba(255,215,0,.25);}
+.alert-pill.low      { background: rgba(0,255,159,.08);  color:#00ff9f; border:1px solid rgba(0,255,159,.2); }
+.alert-pill.normal   { background: rgba(0,255,159,.08);  color:#00ff9f; border:1px solid rgba(0,255,159,.2); }
+.alert-pill.warning  { background: rgba(255,215,0,.12);  color:#ffd700; border:1px solid rgba(255,215,0,.25);}
+
+@keyframes fadeIn  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+@keyframes slideIn { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:none} }
+.animate-fade-in  { animation: fadeIn  .45s ease-out; }
+.animate-slide-in { animation: slideIn .3s  ease-out; }
+
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+.skeleton {
+  background: linear-gradient(90deg,#0a1628 25%,#1a3a5c 50%,#0a1628 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ── Leaflet dark theme fixes ─────────────────────────── */
+.leaflet-container { background: #0a1628 !important; font-family: 'Exo 2', sans-serif; }
+.leaflet-tile-pane { filter: brightness(0.9); }
+.leaflet-popup-content-wrapper {
+  background: #0a1628 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(0,212,255,.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 20px rgba(0,212,255,0.15) !important;
+}
+.leaflet-popup-tip { background: #0a1628 !important; }
+.leaflet-popup-close-button { color: #94a3b8 !important; font-size: 18px !important; }
+.leaflet-popup-close-button:hover { color: #00d4ff !important; }
+.leaflet-control-zoom a {
+  background: #0a1628 !important;
+  color: #00d4ff !important;
+  border: 1px solid rgba(0,212,255,.3) !important;
+}
+.leaflet-control-zoom a:hover { background: rgba(0,212,255,0.1) !important; }
+.leaflet-control-attribution {
+  background: rgba(10,22,40,0.8) !important;
+  color: #475569 !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a { color: #00d4ff !important; }
+
+/* Fix marker icon path broken by bundlers */
+.leaflet-default-icon-path {
+  background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png);
+}
