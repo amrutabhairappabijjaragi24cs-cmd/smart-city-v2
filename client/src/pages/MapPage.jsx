@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSocket } from '../context/SocketContext';
-import axios from 'axios';
+import api from '../utils/api';
 
 const statusColor = (s) => s === 'critical' ? '#ff4444' : s === 'warning' ? '#ffd700' : '#00ff9f';
 
@@ -16,7 +16,7 @@ export default function MapPage() {
 
   const fetchMap = async () => {
     try {
-      const { data } = await axios.get('/api/sensors/map');
+      const { data } = await api.get('/api/sensors/map');
       if (data.success && data.data.length) setSensors(data.data);
     } catch {}
   };

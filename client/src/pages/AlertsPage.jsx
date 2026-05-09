@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useSocket } from '../context/SocketContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -31,7 +31,7 @@ export default function AlertsPage() {
       const params = { limit: 100 };
       if (filter.severity)     params.severity     = filter.severity;
       if (filter.acknowledged) params.acknowledged = filter.acknowledged;
-      const { data } = await axios.get('/api/alerts', { params });
+      const { data } = await api.get('/api/alerts', { params });
       if (data.success) setAlerts(data.data);
     } catch {
       setAlerts(latestAlerts);
@@ -41,12 +41,12 @@ export default function AlertsPage() {
   };
 
   const acknowledge = async (id) => {
-    try { await axios.patch(`/api/alerts/${id}/acknowledge`); } catch {}
+    try { await api.patch(`/api/alerts/${id}/acknowledge`); } catch {}
     setAlerts(prev => prev.map(a => a._id === id ? { ...a, acknowledged: true } : a));
   };
 
   const remove = async (id) => {
-    try { await axios.delete(`/api/alerts/${id}`); } catch {}
+    try { await api.delete(`/api/alerts/${id}`); } catch {}
     setAlerts(prev => prev.filter(a => a._id !== id));
   };
 

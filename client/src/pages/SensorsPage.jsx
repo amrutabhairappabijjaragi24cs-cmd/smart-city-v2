@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useSocket } from '../context/SocketContext';
 
 const LOCS = ['MG Road','Whitefield IT Zone','Koramangala','Hebbal Junction','Lalbagh Garden'];
@@ -30,7 +30,7 @@ export default function SensorsPage() {
 
   const fetchSensors = async () => {
     try {
-      const { data } = await axios.get('/api/sensors/latest');
+      const { data } = await api.get('/api/sensors/latest');
       if (data.success) setSensors(data.data);
     } catch { setSensors(live); }
     finally { setLoading(false); }
@@ -42,7 +42,7 @@ export default function SensorsPage() {
     setSubmitting(true); setMsg('');
     try {
       const coords = COORDS[form.location] || { lat:12.9716, lng:77.5946 };
-      const { data } = await axios.post('/api/sensors', {
+      const { data } = await api.post('/api/sensors', {
         ...form, coordinates: coords,
         temperature: +form.temperature, humidity: +form.humidity,
         airQualityIndex: +form.airQualityIndex, noiseLevel: +form.noiseLevel,
@@ -149,7 +149,7 @@ export default function SensorsPage() {
                     </td>
                     <td className="px-4 py-3">
                       {s._id && !String(s._id).startsWith('mem') && (
-                        <button onClick={async()=>{ try{await axios.delete(`/api/sensors/${s._id}`);setSensors(p=>p.filter(x=>x._id!==s._id))}catch{} }}
+                        <button onClick={async()=>{ try{await api.delete(`/api/sensors/${s._id}`);setSensors(p=>p.filter(x=>x._id!==s._id))}catch{} }}
                           className="text-xs text-red-400 hover:text-red-300 px-2 py-1 rounded-lg hover:bg-red-500/10 transition-all">✕</button>
                       )}
                     </td>

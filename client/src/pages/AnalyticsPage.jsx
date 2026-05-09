@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { AreaChart, Area, BarChart, Bar, RadarChart, Radar, PolarGrid,
          PolarAngleAxis, PolarRadiusAxis, XAxis, YAxis, CartesianGrid,
          Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -30,9 +30,9 @@ export default function AnalyticsPage() {
   const fetchAll = async () => {
     try {
       const [s, l, t] = await Promise.all([
-        axios.get('/api/analytics/summary'),
-        axios.get('/api/analytics/by-location'),
-        axios.get('/api/analytics/trend?hours=6'),
+        api.get('/api/analytics/summary'),
+        api.get('/api/analytics/by-location'),
+        api.get('/api/analytics/trend?hours=6'),
       ]);
       if (s.data.success) setSummary(s.data.data);
       if (l.data.success) setByLocation(l.data.data);

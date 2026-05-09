@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSocket } from '../context/SocketContext';
 import { useAuth }   from '../context/AuthContext';
-import axios from 'axios';
+import api from '../utils/api';
 import SensorCard from '../components/dashboard/SensorCard';
 import LiveChart  from '../components/charts/LiveChart';
 import AlertFeed  from '../components/dashboard/AlertFeed';
@@ -35,8 +35,8 @@ export default function DashboardPage() {
     }].slice(-20));
   }, [sensorData]);
 
-  const fetchSummary  = async () => { try { const {data} = await axios.get('/api/analytics/summary'); if(data.success) setSummary(data.data); } catch {} };
-  const fetchMlStatus = async () => { try { const {data} = await axios.get('/api/anomaly/ml-status'); setMlOnline(data.online); } catch {} };
+  const fetchSummary  = async () => { try { const {data} = await api.get('/api/analytics/summary'); if(data.success) setSummary(data.data); } catch {} };
+  const fetchMlStatus = async () => { try { const {data} = await api.get('/api/anomaly/ml-status'); setMlOnline(data.online); } catch {} };
 
   // Filter sensors
   const filtered = sensorData.filter(s => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useSocket } from '../context/SocketContext';
 
 export default function AdminPage() {
@@ -15,8 +15,8 @@ export default function AdminPage() {
   const fetchAll = async () => {
     try {
       const [u, s] = await Promise.all([
-        axios.get('/api/auth/admin/users'),
-        axios.get('/api/auth/admin/online'),
+        api.get('/api/auth/admin/users'),
+        api.get('/api/auth/admin/online'),
       ]);
       if (u.data.success) setUsers(u.data.data);
       if (s.data.success) setStats(s.data.data);
@@ -27,7 +27,7 @@ export default function AdminPage() {
   const sendAlert = async () => {
     if (!alertForm.userId || !alertForm.message) return;
     try {
-      const { data } = await axios.post('/api/auth/admin/alert-user', alertForm);
+      const { data } = await api.post('/api/auth/admin/alert-user', alertForm);
       setAlertMsg(data.success ? `✓ ${data.message}` : `⚠ ${data.message}`);
       setAlertForm({ userId:'', message:'' });
       setTimeout(() => setAlertMsg(''), 4000);
