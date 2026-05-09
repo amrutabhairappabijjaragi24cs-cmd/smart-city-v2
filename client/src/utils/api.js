@@ -1,23 +1,29 @@
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_URL ||'https://smartcity-backend-xsxs.onrender.com';
-
-const api = axios.create({ baseURL: BASE_URL, timeout: 10000 });
+const api = axios.create({
+  baseURL: 'https://smartcity-backend-xsxs.onrender.com',
+  timeout: 10000,
+});
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('sc_token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
 });
 
 api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response?.status === 401) {
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
       localStorage.removeItem('sc_token');
       window.location.href = '/login';
     }
-    return Promise.reject(err);
+
+    return Promise.reject(error);
   }
 );
 
