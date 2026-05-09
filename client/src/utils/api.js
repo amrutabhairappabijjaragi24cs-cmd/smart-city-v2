@@ -1,6 +1,6 @@
-import api from '../utils/api';
+import axios from 'axios';
 
-const api = api.create({
+const api = axios.create({
   baseURL: 'https://smartcity-backend-xsxs.onrender.com',
   timeout: 10000,
 });
