@@ -21,7 +21,7 @@ npm run dev
 When the server starts you'll see:
 ```
 🏙️  SmartCity API started!
-   Local:   http://localhost:5000
+   Local:   import.meta.env.VITE_API_URL
    Network: http://192.168.1.5:5000   ← YOUR LAPTOP IP
 
 📱 Share this with mobile/other laptops on same WiFi:
