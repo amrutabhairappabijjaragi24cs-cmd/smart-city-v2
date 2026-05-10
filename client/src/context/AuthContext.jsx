@@ -24,14 +24,14 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const { data } = await api.get('/api/auth/me');
+        const { data } = await api.get('/auth/me');
 
         if (data.success) {
           setUser(data.user);
         } else {
           logout();
         }
-      } catch {
+      } catch (error) {
         logout();
       } finally {
         setLoading(false);
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const { data } = await api.post('/api/auth/login', {
+    const { data } = await api.post('/auth/login', {
       email,
       password,
     });
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (form) => {
-    const { data } = await api.post('/api/auth/register', form);
+    const { data } = await api.post('/auth/register', form);
 
     if (data.success) {
       saveToken(data.token, data.user);
@@ -75,8 +75,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await api.post('/api/auth/logout');
-    } catch {}
+      await api.post('/auth/logout');
+    } catch (error) {}
 
     localStorage.removeItem('sc_token');
 
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateProfile = async (form) => {
-    const { data } = await api.put('/api/auth/profile', form);
+    const { data } = await api.put('/auth/profile', form);
 
     if (data.success) {
       setUser(data.user);
