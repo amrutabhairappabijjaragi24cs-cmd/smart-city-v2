@@ -28,7 +28,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://smart-city-v2-live.vercel.app',
-    'https://smart-city-v2-six.vercel.app'
+    'https://smart-city-v2-six.vercel.app',
+    'https://smart-city-v2-five.vercel.app'
   ],
   credentials: true
 }));
