@@ -27,6 +27,7 @@ const io = new Server(server, {
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'https://smart-city-v2-live.vercel.app',
     'https://smart-city-v2-six.vercel.app'
   ],
   credentials: true
