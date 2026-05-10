@@ -14,18 +14,28 @@ const server = http.createServer(app);
 // ── Socket.io — allow all origins for local network access ─────
 const io = new Server(server, {
   cors: {
-    origin: '*',        // allow all — safe for local dev
+    origin: [
+      'http://localhost:5173',
+      'https://smart-city-v2-six.vercel.app'
+    ],
     methods: ['GET', 'POST'],
-    credentials: false,
+    credentials: true,
   },
   transports: ['websocket', 'polling'],
 });
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://smart-city-v2-six.vercel.app'
+  ],
+  credentials: true
+}));
 
 // ── Middleware ─────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 
 // CORS — allow all origins so mobile/other devices can connect
-app.use(cors({ origin: '*', credentials: false }));
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
