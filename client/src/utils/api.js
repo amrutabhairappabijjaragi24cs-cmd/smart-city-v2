@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://smartcity-backend-xsxs.onrender.com',
+  baseURL: 'https://smartcity-backend-xsxs.onrender.com/api',
   timeout: 10000,
 });
 
