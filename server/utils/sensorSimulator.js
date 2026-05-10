@@ -63,7 +63,7 @@ const startSensorSimulation = (io) => {
   interval = setInterval(async () => {
     // Pick 10 sensors per tick (rotate through all 50)
     const batch = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50; i++) {
       batch.push(SENSORS[sensorIndex % SENSORS.length]);
       sensorIndex++;
     }
