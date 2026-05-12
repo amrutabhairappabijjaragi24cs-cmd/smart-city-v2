@@ -3,7 +3,7 @@ let client = null;
 const init = () => {
   const sid   = process.env.TWILIO_ACCOUNT_SID;
   const token = process.env.TWILIO_AUTH_TOKEN;
-  if (sid && token && sid.startsWith('AC') && sid !== 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') {
+  if (sid && token && sid.startsWith('AC')) {
     try {
       client = require('twilio')(sid, token);
       console.log('[Twilio] WhatsApp/SMS service ready');
@@ -17,13 +17,26 @@ const init = () => {
 init();
 
 // Send WhatsApp to a specific phone number
+let lastWhatsAppSent = 0;
 const sendWhatsApp = async (toPhone, message) => {
+const now = Date.now();
+
+  // 30 second cooldown
+  if (now - lastWhatsAppSent < 30000) {
+    return {
+      success: false,
+      message: "WhatsApp cooldown active"
+    };
+  }
+  lastWhatsAppSent = now;
   if (!client) { console.log(`[WhatsApp MOCK] To ${toPhone}: ${message}`); return { success: false }; }
   try {
     const msg = await client.messages.create({
       body: message,
       from: process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886',
-      to:   `whatsapp:${toPhone}`,
+      to: toPhone.startsWith('whatsapp:')
+  ? toPhone
+  : `whatsapp:${toPhone}`,
     });
     console.log(`[WhatsApp] Sent to ${toPhone}: ${msg.sid}`);
     return { success: true, sid: msg.sid };

@@ -7,6 +7,7 @@ const helmet   = require('helmet');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 
+const sendWhatsApp = require("./utils/whatsappService");
 const sendTelegramAlert = require('./utils/sendTelegramAlert');
 const { startSensorSimulation } = require('./utils/sensorSimulator');
 
