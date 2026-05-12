@@ -6,6 +6,8 @@ const cors     = require('cors');
 const helmet   = require('helmet');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
+
+const sendTelegramAlert = require('./utils/sendTelegramAlert');
 const { startSensorSimulation } = require('./utils/sensorSimulator');
 
 const app    = express();
@@ -88,6 +90,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smart-cit
 // ── Listen on ALL network interfaces ─────────────────────────
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, '0.0.0.0', () => {
+  sendTelegramAlert("✅ Smart City Telegram Alert Connected");
   // Get local network IP
   const { networkInterfaces } = require('os');
   const nets = networkInterfaces();
@@ -108,3 +111,4 @@ server.listen(PORT, '0.0.0.0', () => {
 });
 
 module.exports = { app, io };
+
