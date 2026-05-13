@@ -12,7 +12,7 @@ const MAX_BUF = 1000;
 let interval  = null;
 
 const rnd   = (min, max) => min + Math.random() * (max - min);
-const spike = () => Math.random() < 0.09;
+const spike = () => Math.random() < 0.01;
 
 const generate = (sensor) => ({
   sensorId:         sensor.id,
@@ -267,7 +267,7 @@ const startSensorSimulation = (io) => {
 
     io.emit('sensor_update', readings);
 
-  }, 5000);
+  }, 30000);
 };
 
 module.exports = {
